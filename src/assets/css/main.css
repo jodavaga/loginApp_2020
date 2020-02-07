@@ -308,7 +308,7 @@ iframe {
 }
 
 .input-checkbox100:checked + .label-checkbox100::before {
-  color: red;
+  color: #827ffe;
   border-style: solid;
 }
 
@@ -353,6 +353,11 @@ iframe {
 
 .login100-form-btn:hover {
   background-color: #403866;
+}
+
+.login100-form-btn:disabled {
+  background-color: #6c757d;
+  cursor: initial;
 }
 
 
