@@ -297,7 +297,7 @@ iframe {
   height: 18px;
   border-radius: 3px;
   background: #fff;
-  border: 2px dashed #827ffe;
+  border: 2px solid #827ffe;
   left: 0;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -308,8 +308,7 @@ iframe {
 }
 
 .input-checkbox100:checked + .label-checkbox100::before {
-  color: red;
-  border-style: solid;
+  color: #827ffe;
 }
 
 
