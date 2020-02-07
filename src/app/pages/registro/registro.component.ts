@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { UsuarioModel } from '../../models/usuario.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -13,7 +14,8 @@ export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   usuario: UsuarioModel;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private authService: AuthService) {
 
    }
 
@@ -28,13 +30,21 @@ export class RegistroComponent implements OnInit {
     });
 
   }
-  
+
   onSubmit() {
-    console.log( this.registroForm );
-    console.warn('Formulario enviado!');
+
+    if ( !this.registroForm.valid ) {
+      return;
+    }
     // Fills user info with form values
     this.usuario = this.registroForm.value;
-    console.log( this.usuario );
+
+    // Subscribe to service creating new user
+    this.authService.createNewUser(this.usuario).subscribe( resp => {
+      console.log(resp);
+    }, (error) => {
+      console.log(error.error.error.message);
+    });
   }
 
   // Standar validations
