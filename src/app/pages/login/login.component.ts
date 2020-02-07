@@ -69,16 +69,20 @@ export class LoginComponent implements OnInit {
         icon: 'error',
         showConfirmButton: true,
         allowOutsideClick: false
+      }).then( res => {
+
+        if (res.value) {
+          this.loginForm.reset();
+        }
       });
     } else {
       Swal.fire({
         title: 'Login',
-        text: 'Validando informacion',
         icon: 'info',
         showConfirmButton: false,
         allowOutsideClick: false
       });
-      Swal.isLoading();
+      Swal.showLoading();
     }
   }
 

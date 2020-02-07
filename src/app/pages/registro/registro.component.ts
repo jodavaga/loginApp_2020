@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import Swal from 'sweetalert2';
 
 import { UsuarioModel } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
@@ -15,7 +18,8 @@ export class RegistroComponent implements OnInit {
   usuario: UsuarioModel;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
 
    }
 
@@ -41,9 +45,35 @@ export class RegistroComponent implements OnInit {
 
     // Subscribe to service creating new user
     this.authService.createNewUser(this.usuario).subscribe( resp => {
-      console.log(resp);
+      Swal.fire({
+        title: 'Registrado',
+        text: `Usuario registrado correctamente`,
+        icon: 'success',
+        allowOutsideClick: false,
+        showConfirmButton: false
+      });
+
+      setTimeout(() => {
+        console.log(resp);
+        Swal.close();
+      }, 1000);
+
     }, (error) => {
-      console.log(error.error.error.message);
+
+      Swal.fire({
+        title: 'Error',
+        text: 'Usuario ya existe. Login por favor',
+        icon: 'error',
+        allowOutsideClick: false,
+        showConfirmButton: true
+      }).then( e => {
+        console.log(e.value);
+        if (e.value) {
+          console.log(error.error.error.message);
+          Swal.close();
+          this.router.navigate(['/login']);
+        }
+      });
     });
   }
 
