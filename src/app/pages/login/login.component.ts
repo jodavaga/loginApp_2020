@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +13,15 @@ export class LoginComponent implements OnInit {
 
   loginForm;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private http: HttpClient,
+              private authService: AuthService
+    ) { }
 
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
-      username: ['asd@asd.com', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
@@ -26,9 +32,13 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    console.log(this.loginForm);
-    console.warn('form sent');
     console.log(this.loginForm.value);
+
+    this.authService.loginUser( this.loginForm.value ).subscribe( resp => {
+      console.log(resp);
+    }, (error) => {
+      console.log(error.error.error.message);
+    });
 
   }
 

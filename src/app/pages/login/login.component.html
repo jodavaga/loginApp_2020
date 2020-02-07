@@ -8,13 +8,13 @@
                     Login
                 </span>
 
-                <span *ngIf="requiredValidation('username') || loginForm.get('username').errors?.email" class="text-danger">El correo es obligatorio</span>
+                <span *ngIf="requiredValidation('email') || loginForm.get('email').errors?.email" class="text-danger">El correo es obligatorio</span>
                 <div class="wrap-input100 m-b-16">
                     <input class="input100" 
                            type="text" 
-                           name="username" 
-                           formControlName="username"
-                           placeholder="Username">
+                           name="email" 
+                           formControlName="email"
+                           placeholder="email">
 
                     <span class="focus-input100"></span>
                 </div>
