@@ -8,6 +8,8 @@
                         Crear nueva cuenta
                     </span>
     
+                    <span *ngIf="requiredValidation('email')"
+                            class="text-danger">El correo es requerido</span>
                     <span *ngIf="registroForm.get('email').errors?.email"
                             class="text-danger">El correo no tiene formato valido</span>
                     <div class="wrap-input100 m-b-16">
@@ -20,7 +22,7 @@
                         <span class="focus-input100"></span>
                     </div>
 
-                    <span *ngIf="!registroForm.get('name').pristine && registroForm.get('name').errors?.required" 
+                    <span *ngIf="requiredValidation('name')" 
                         class="text-danger">El nombre es obligatorio</span>
                     <div class="wrap-input100 m-b-16">
                         <input class="input100" 
@@ -32,6 +34,8 @@
                         <span class="focus-input100"></span>
                     </div>
                     
+                    <span *ngIf="requiredValidation('password')" 
+                        class="text-danger">La contraseña es obligatoria</span>
                     <span *ngIf="!registroForm.get('password').pristine && registroForm.get('password').errors?.minlength" 
                         class="text-danger">La contraseña debe de ser más de 6 letras</span>
                     <div class="wrap-input100 m-b-16" data-validate = "Password is required">
@@ -60,7 +64,7 @@
                     <!-- [disabled]="!registroForm.valid" -->
                     <div class="container-login100-form-btn m-t-17">
                         <button class="login100-form-btn" type="submit"
-                            >
+                                [disabled]="!registroForm.valid">
                             Crear cuenta
                         </button>
                     </div>

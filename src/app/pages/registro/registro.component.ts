@@ -30,11 +30,22 @@ export class RegistroComponent implements OnInit {
   }
   
   onSubmit() {
+    console.log( this.registroForm );
     console.warn('Formulario enviado!');
     // Fills user info with form values
     this.usuario = this.registroForm.value;
     console.log( this.usuario );
-   
+  }
+
+  // Standar validations
+  requiredValidation( control ) {
+    if ( this.registroForm.get(control).touched && 
+        (this.registroForm.get(control).errors && this.registroForm.get(control).errors.required) 
+    ) {
+      return true;
+    } 
+
+    return false;
   }
 
 
