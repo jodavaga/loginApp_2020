@@ -45,6 +45,7 @@ export class RegistroComponent implements OnInit {
 
     // Subscribe to service creating new user
     this.authService.createNewUser(this.usuario).subscribe( resp => {
+      // Alert fired
       Swal.fire({
         title: 'Registrado',
         text: `Usuario registrado correctamente`,
@@ -52,14 +53,14 @@ export class RegistroComponent implements OnInit {
         allowOutsideClick: false,
         showConfirmButton: false
       });
-
+      // Alert closed at 1s after successful
       setTimeout(() => {
         console.log(resp);
         Swal.close();
       }, 1000);
 
     }, (error) => {
-
+      // Alert fired on error
       Swal.fire({
         title: 'Error',
         text: 'Usuario ya existe. Login por favor',
@@ -67,6 +68,7 @@ export class RegistroComponent implements OnInit {
         allowOutsideClick: false,
         showConfirmButton: true
       }).then( e => {
+        // Redirected after confirm error
         console.log(e.value);
         if (e.value) {
           console.log(error.error.error.message);
