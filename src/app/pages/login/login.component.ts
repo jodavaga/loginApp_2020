@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm;
 
   constructor(private formBuilder: FormBuilder,
-              private http: HttpClient,
+              private router: Router,
               private authService: AuthService
     ) { }
 
@@ -51,8 +51,12 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.loginUser( this.loginForm.value ).subscribe( resp => {
+      // Successful response
       Swal.close();
+      // Set idToken to localstorage
       console.log(resp);
+      localStorage.setItem('idToken', resp['idToken']);
+      this.router.navigate(['/home']);
     }, (error) => {
       // Fire authenticaiton error
       this.swalFire('error');
