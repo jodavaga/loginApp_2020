@@ -53,10 +53,10 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser( this.loginForm.value ).subscribe( resp => {
       // Successful response
       Swal.close();
-      // Set idToken to localstorage
       console.log(resp);
+      // Set idToken to localstorage
       localStorage.setItem('idToken', resp['idToken']);
-      this.router.navigate(['/home']);
+      this.router.navigateByUrl('/home');
     }, (error) => {
       // Fire authenticaiton error
       this.swalFire('error');

@@ -32,6 +32,10 @@ export class AuthService {
 
   }
 
+  logout() {
+    localStorage.removeItem('idToken');
+  }
+
   createNewUser( user: UsuarioModel ) {
 
     const dataUser = {
@@ -51,5 +55,14 @@ export class AuthService {
   retrieveToken() {
     this.token = localStorage.getItem('token');
     return this.token;
+  }
+
+  checkinAuthentication(): boolean {
+
+    let token = localStorage.getItem('idToken');
+    if (token) {
+      return true;
+    }
+    return false;
   }
 }
