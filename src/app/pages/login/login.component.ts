@@ -24,9 +24,15 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
     });
 
+    // Get email in local storage if checkbox is checked
+    if (localStorage.getItem('email')) {
+      this.loginForm.get('rememberMe').setValue(true);
+      this.loginForm.get('email').setValue(localStorage.getItem('email'));
+    }
   }
 
   onSubmit() {
@@ -36,6 +42,13 @@ export class LoginComponent implements OnInit {
     }
     // Swal action fired
     this.swalFire('login');
+
+    // save email to localstorage or delete it if checkbox is unchecked
+    if (this.loginForm.get('rememberMe').value) {
+      localStorage.setItem('email', this.loginForm.get('email').value);
+    } else {
+      localStorage.removeItem('email');
+    }
 
     this.authService.loginUser( this.loginForm.value ).subscribe( resp => {
       Swal.close();

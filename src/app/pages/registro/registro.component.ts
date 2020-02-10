@@ -53,6 +53,8 @@ export class RegistroComponent implements OnInit {
         allowOutsideClick: false,
         showConfirmButton: false
       });
+
+      this.authService.createToken(resp['idToken']);
       // Alert closed at 1s after successful
       setTimeout(() => {
         console.log(resp);
