@@ -71,7 +71,6 @@ export class RegistroComponent implements OnInit {
         showConfirmButton: true
       }).then( e => {
         // Redirected after confirm error
-        console.log(e.value);
         if (e.value) {
           console.log(error.error.error.message);
           Swal.close();

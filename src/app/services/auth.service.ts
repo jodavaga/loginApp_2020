@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { map } from 'rxjs/operators';
+
 import { UsuarioModel } from '../models/usuario.model';
 
 @Injectable({
@@ -47,19 +49,32 @@ export class AuthService {
 
   }
 
+  getUserData() {
+
+    const data = {
+      idToken: this.retrieveToken()
+    }
+
+    return this.http.post( `${ this.url }:lookup?key=${ this.apiKey }`, data).pipe(
+      map( data => {
+        return data['users'][0].email;
+      })
+    );
+  }
+
   createToken( idToken: string ) {
     this.token = idToken;
-    localStorage.setItem('token', idToken);
+    localStorage.setItem('idToken', idToken);
   }
 
   retrieveToken() {
-    this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem('idToken');
     return this.token;
   }
 
   checkinAuthentication(): boolean {
 
-    let token = localStorage.getItem('idToken');
+    const token = localStorage.getItem('idToken');
     if (token) {
       return true;
     }
